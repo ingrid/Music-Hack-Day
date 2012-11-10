@@ -31,10 +31,9 @@
                 var dir = this.goal_height - this.obj.getPosition().y;
 
                 var dir_sign = 0;
-                if (this.velocity !== 0) {
+                if (dir !== 0) {
                     dir_sign = Math.abs(dir)/dir;
                 }
-
                 this.velocity *= dir_sign;
 
                 // Terminal velocity
@@ -45,7 +44,7 @@
                 
                 this.velocity = Math.min(this.max_velocity, Math.abs(this.velocity)) * vel_sign;
 
-                var curr_pos = a_grp.getPosition();
+                var curr_pos = this.obj.getPosition();
 
                 this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + this.velocity});
             },
@@ -53,9 +52,9 @@
             acceleration : 0,
             max_velocity : 20,
             max_acceleration : 5,
-            goal_height : stage.getHeight()/2
+            goal_height : 384
         }
-
+ 
         var main_circle = new Kinetic.Circle({
                     x : 0,
                     y : 0,
@@ -75,17 +74,16 @@
     };
 
     setup();
-    
+
+
     loop = setInterval(function(){
-        var r = Math.random()*stage.getHeight();
-        avatar.move(r);
         avatar.update();
-        //console.log(avatar.obj.getPosition());
         avatar_layer.draw();
     }, 20);
 
     setInterval(function(){
-        
+        var r = Math.random()*stage.getHeight();
+        avatar.move(r);
     }, 1000);
 
 
