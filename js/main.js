@@ -1,25 +1,9 @@
-s
-require(["notes", "helpers", "layers"], function(notes, helpers, layers){
+require(["notes", "helpers", "app"], function(notes, helpers, App){
     var avatar_layer, avatar, background_layer, loop, stage, string;
     notes.addNote(50, 50);
     notes.addNote(150, 50);
     notes.addNote(50, 150);
     notes.addNote(150, 150);
-    
-    
-    stage = new Kinetic.Stage({
-        container :'screenContainer',
-        width : 1024,
-        height : 768
-    });
-    background_layer = new Kinetic.Layer();
-    
-    avatar_layer = new Kinetic.Layer();
-    
-    
-    stage.add(background_layer);
-    stage.add(avatar_layer);
-    stage.add(notes_layer);
     
     loop = setTimeout(function(){
         
@@ -28,7 +12,7 @@ require(["notes", "helpers", "layers"], function(notes, helpers, layers){
     var createAvatar = function () {
         var size = 20;
         var a_grp = new Kinetic.Group();
-        a_grp.setPosition(20, stage.getHeight()/2);
+        a_grp.setPosition(20, App.stage.getHeight()/2);
         
         var a = {
             obj: a_grp,
@@ -70,7 +54,7 @@ require(["notes", "helpers", "layers"], function(notes, helpers, layers){
             acceleration : 0,
             max_velocity : 10,
             max_acceleration : 30,
-            goal_height : stage.getHeight()
+            goal_height : App.stage.getHeight()
         }
         
         var main_circle = new Kinetic.Circle({
@@ -88,21 +72,20 @@ require(["notes", "helpers", "layers"], function(notes, helpers, layers){
     
     var setup = function () {
         avatar = createAvatar();
-        avatar_layer.add(avatar.obj);
-        
+        App.avatar_layer.add(avatar.obj);
     };
     
     setup();
     
     loop = setInterval(function(){
         avatar.update();
-        avatar_layer.draw();
-        notes_layer.draw();
+        App.avatar_layer.draw();
+        App.notes_layer.draw();
     }, 20);
     
     // Randomly generate pitches for data
     setInterval(function(){
-        var r = Math.random()*stage.getHeight();
+        var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
         avatar.move(r);
     }, 500);
     

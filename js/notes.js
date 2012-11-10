@@ -1,4 +1,4 @@
-define(["layers"], function(util) {
+define(["app"], function(App) {
     var note_template = {
         x : 0,
         y : 0,
@@ -23,7 +23,7 @@ define(["layers"], function(util) {
         addNotes : 
     };
     
-    notes_layer.add(notes.group);
+    App.notes_layer.add(notes.group);
     return notes;
 });
 
