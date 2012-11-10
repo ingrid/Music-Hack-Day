@@ -38,7 +38,10 @@
             },
             update : function () {
                 // Smoothly moves the avatar to the goal position
-                var dir = this.goal_height - this.obj.getPosition().y;
+
+                var curr_pos = this.obj.getPosition();
+
+                var dir = this.goal_height - curr_pos.y;
 
                 var dir_sign = 0;
                 if (dir !== 0) {
@@ -53,8 +56,6 @@
                 }
                 
                 this.velocity = Math.min(this.max_velocity, Math.abs(this.velocity)) * vel_sign;
-
-                var curr_pos = this.obj.getPosition();
 
                 this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + this.velocity});
             },
@@ -75,7 +76,7 @@
         a.obj.add(main_circle);
 
         return a;
-    }; 
+    };
 
 
     var setup = function () {
