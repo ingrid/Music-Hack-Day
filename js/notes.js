@@ -1,4 +1,4 @@
-define(["app"], function(App) {
+define(["app", "helpers"], function(App, helpers) {
     var note_template = {
         x : 0,
         y : 0,
