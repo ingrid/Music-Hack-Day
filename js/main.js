@@ -38,32 +38,37 @@
             update : function () {
                 // Smoothly moves the avatar to the goal position
 
-                var curr_pos = this.obj.getPosition();
+                var curr_pos = this.obj.getAbsolutePosition();
 
                 var offset = this.goal_height - curr_pos.y;
 
-                this.acceleration = Math.abs(offset);
+                if (offset != 0) {
+                    this.acceleration = Math.abs(100/offset);
+                } else {
+                    this.acceleration = 0
+                }
+
                 this.acceleration = Math.min(this.max_acceleration, this.acceleration);
 
                 var dir_sign = sign(offset);
 
-                this.velocity += dir_sign*this.acceleration;
+                this.velocity += (dir_sign*this.acceleration);
 
-                // Terminal velocity
-                var vel_sign = 0;
-                if (this.velocity !== 0) {
-                    vel_sign = Math.abs(this.velocity)/this.velocity;
+                // Terminal velocity              
+                this.velocity = Math.min(this.max_velocity, Math.abs(this.velocity));
+
+                var delta_height = (this.velocity * dir_sign);
+                if (Math.abs(offset) < Math.abs(delta_height)) {
+                    delta_height = Math.abs(Math.abs(delta_height)-Math.abs(delta_height)) * dir_sign;
                 }
-                
-                this.velocity = Math.min(this.max_velocity, Math.abs(this.velocity)) * vel_sign;
 
-                this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + this.velocity});
+                this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
             },
-            velocity : 5,
+            velocity : 0,
             acceleration : 0,
-            max_velocity : 100,
-            max_acceleration : 2,
-            goal_height : 384
+            max_velocity : 10,
+            max_acceleration : 30,
+            goal_height : stage.getHeight()
         }
  
         var main_circle = new Kinetic.Circle({
@@ -92,9 +97,10 @@
         avatar_layer.draw();
     }, 20);
 
+    // Randomly generate pitches for data
     setInterval(function(){
-        var r = Math.random()*stage.getHeight()/2+30;
+        var r = Math.random()*stage.getHeight();
         avatar.move(r);
-    }, 10000);
+    }, 500);
 
 })();
