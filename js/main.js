@@ -1,4 +1,5 @@
-require(["notes", "helpers", "layers"], function(notes, h_u, l_u){
+s
+require(["notes", "helpers", "layers"], function(notes, helpers, layers){
     var avatar_layer, avatar, background_layer, loop, stage, string;
     notes.addNote(50, 50);
     notes.addNote(150, 50);
