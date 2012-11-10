@@ -6,5 +6,5 @@ var sign = function(n) {
 };
 
 var timeToPos = function(t) {
-	return t/500;
+	return t/5;
 }

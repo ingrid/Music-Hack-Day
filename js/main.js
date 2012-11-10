@@ -63,19 +63,22 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     
     
     var setup = function () {
+        App.start_time = new Date();
         avatar = createAvatar();
         App.avatar_layer.add(avatar.obj);
 
         for (var i = 0; i < 300; i++) {
             var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            notes.addNote((i+1)*200, r);
+            notes.addNote(timeToPos((i+1)*1000), r);
         }
-        
     };
     
     setup();
     
     loop = setInterval(function(){
+        var time_elapsed = new Date() - App.start_time;
+        console.log(timeToPos(time_elapsed));
+        notes.group.setAbsolutePosition({x: -timeToPos(time_elapsed), y: 0});
         avatar.update();
         App.avatar_layer.draw();
         App.notes_layer.draw();

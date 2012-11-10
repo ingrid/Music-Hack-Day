@@ -1,5 +1,6 @@
 define([], function () {
 	var App = {
+		start_time : null,
 		stage : new Kinetic.Stage({
 		    container : 'screenContainer',
 		    width : 1024,
