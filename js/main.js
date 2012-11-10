@@ -1,13 +1,5 @@
 require(["notes", "helpers", "app"], function(notes, helpers, App){
     var avatar_layer, avatar, background_layer, loop, stage, string;
-    notes.addNote(50, 50);
-    notes.addNote(150, 50);
-    notes.addNote(50, 150);
-    notes.addNote(150, 150);
-    
-    loop = setTimeout(function(){
-        
-    });
     
     var createAvatar = function () {
         var size = 20;
@@ -73,6 +65,12 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     var setup = function () {
         avatar = createAvatar();
         App.avatar_layer.add(avatar.obj);
+
+        for (var i = 0; i < 300; i++) {
+            var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
+            notes.addNote((i+1)*200, r);
+        }
+        
     };
     
     setup();
