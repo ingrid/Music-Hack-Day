@@ -1,9 +1,8 @@
 (function(){
     var avatar_layer, avatar, background_layer, loop, stage, string;
 
-    require(["helper/util"], function(util) {
-        console.log("Tried to load helper.");
-        console.log(helper);
+    require(["helpers"], function(helpers) {
+        console.log("Tried to load helpers.");
     });
 
     stage = new Kinetic.Stage({
@@ -43,10 +42,8 @@
 
                 var dir = this.goal_height - curr_pos.y;
 
-                var dir_sign = 0;
-                if (dir !== 0) {
-                    dir_sign = Math.abs(dir)/dir;
-                }
+                var dir_sign = sign(dir);
+
                 this.velocity *= dir_sign;
 
                 // Terminal velocity
@@ -96,6 +93,5 @@
         var r = Math.random()*stage.getHeight();
         avatar.move(r);
     }, 1000);
-
 
 })();
