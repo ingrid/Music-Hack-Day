@@ -4,3 +4,7 @@ var sign = function (n) {
 	}
 	return Math.abs(n)/n;
 };
+
+var timeToPos(t) {
+	return t/500;
+}
