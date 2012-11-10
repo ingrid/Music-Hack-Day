@@ -40,11 +40,14 @@
 
                 var curr_pos = this.obj.getPosition();
 
-                var dir = this.goal_height - curr_pos.y;
+                var offset = this.goal_height - curr_pos.y;
 
-                var dir_sign = sign(dir);
+                this.acceleration = Math.abs(offset);
+                this.acceleration = Math.min(this.max_acceleration, this.acceleration);
 
-                this.velocity *= dir_sign;
+                var dir_sign = sign(offset);
+
+                this.velocity += dir_sign*this.acceleration;
 
                 // Terminal velocity
                 var vel_sign = 0;
@@ -58,8 +61,8 @@
             },
             velocity : 5,
             acceleration : 0,
-            max_velocity : 20,
-            max_acceleration : 5,
+            max_velocity : 100,
+            max_acceleration : 2,
             goal_height : 384
         }
  
@@ -90,8 +93,8 @@
     }, 20);
 
     setInterval(function(){
-        var r = Math.random()*stage.getHeight();
+        var r = Math.random()*stage.getHeight()/2+30;
         avatar.move(r);
-    }, 1000);
+    }, 10000);
 
 })();
