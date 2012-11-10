@@ -1,10 +1,16 @@
 (function(){
     var avatar_layer, avatar, background_layer, loop, stage, string;
+
+    require(["helper/util"], function(util) {
+        console.log("Tried to load helper.");
+        console.log(helper);
+    });
+
     stage = new Kinetic.Stage({
-        container : 'screenContainer',
+        container :'screenContainer',
         width : 1024,
         height : 768
-    }),
+    });
     background_layer = new Kinetic.Layer();
     notes_layer = new Kinetic.Layer();
     avatar_layer = new Kinetic.Layer();
@@ -13,6 +19,10 @@
     stage.add(background_layer);
     stage.add(notes_layer);
     stage.add(avatar_layer);
+
+    loop = setTimeout(function(){
+        
+    });
 
     var createAvatar = function () {
         var size = 20;
@@ -56,11 +66,11 @@
         }
  
         var main_circle = new Kinetic.Circle({
-                    x : 0,
-                    y : 0,
-                    radius : size,
-                    fill: 'red'
-                });
+            x : 0,
+            y : 0,
+            radius : size,
+            fill: 'red'
+        });
 
         a.obj.add(main_circle);
 
