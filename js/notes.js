@@ -20,7 +20,8 @@ define(["app"], function(App) {
             var note = makeNote(x, y);
             this.group.add(note);
         },
-        addNotes : 
+        addNotes : function(){
+        }
     };
     
     App.notes_layer.add(notes.group);
