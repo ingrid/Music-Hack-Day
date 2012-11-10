@@ -16,10 +16,11 @@ define(["app"], function(App) {
     var notes = {
         layer : new Kinetic.Layer(),
         group : new Kinetic.Group(),
-        addNote : function(x, y){
+        addNote : function(pitch, time){
             var note = makeNote(x, y);
             this.group.add(note);
-        }
+        },
+        addNotes : 
     };
     
     App.notes_layer.add(notes.group);
