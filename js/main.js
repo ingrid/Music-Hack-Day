@@ -7,6 +7,11 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
         a_grp.setPosition(App.time_offset, App.stage.getHeight()/2);
         
         var a = {
+            laser: new Kinetic.Line({
+                points : [0,0],
+                stroke: 'white',
+                strokeWidth: 5
+            }),
             obj: a_grp,
             size : size,
             actual_pitch : 0,
@@ -16,6 +21,11 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 //App.stage.getHeight()/12 * (12-note_data.Num)
                 //this.goal_height = App.stage.getHeight()/12*(12-pitch);
                 this.goal_height = height_from_pitch(pitch, App.stage.getHeight());
+                var p = this.obj.getAbsolutePosition();
+                this.laser.setPoints([{x:0, y:0},{x: 2000, y:0}]);
+            },
+            pointLaserAtTime: function (t){
+                this.laser.setPoints([{x:0, y:0},{x: timeToPos(t)-this.obj.getPosition().x, y:0}]);
             },
             update : function () {
                 // Smoothly moves the avatar to the goal position
@@ -65,6 +75,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             fill: 'rgb(146, 255, 217)'
         });
         
+        a.obj.add(a.laser);
         a.obj.add(main_rect);
         
         return a;
@@ -111,13 +122,20 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             var time_elapsed = new Date() - App.start_time;
             notes.move(time_elapsed);
             
+            var laser_flag = false;
             // Moves notes from future note array to scoring array when they come in range
             for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
                 var note = App.all_notes[note_idx];
                 var time_window = Math.abs((time_elapsed + App.time_offset) - note.time);
 
-                if (note_idx === App.future_note_idx && note.pitch === avatar.getPitch()) {
-                    note.flash();
+                if (note.pitch === avatar.getPitch()) { 
+                    if (note_idx === App.future_note_idx) {
+                        note.flash();
+                    }
+                    if (!laser_flag) {
+                        avatar.pointLaserAtTime(note.time-time_elapsed);
+                        laser_flag = true;
+                    }
                 }
 
                 if (time_window < App.game_difficulty_prefs.scoring_range) {
