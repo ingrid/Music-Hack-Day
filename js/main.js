@@ -77,7 +77,7 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
             avatar = createAvatar();
             App.avatar_layer.add(avatar.obj);
 
-            for (note_idx = 0; note_idx < 200; note_idx++) {
+            for (note_idx = 0; note_idx < 100; note_idx++) {
                 var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
 
                 //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
@@ -115,6 +115,9 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
                     App.notes_to_score.push(note);
                 } else {
                     note_idx = App.all_notes.length; // Break out of the loop
+                }
+                if (posToTime(App.stage.getWidth()) > time_window) {
+                    note_idx = App.all_notes.length;
                 }
             }
     

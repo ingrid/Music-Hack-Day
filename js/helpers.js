@@ -5,8 +5,13 @@ var sign = function(n) {
 	return Math.abs(n)/n;
 };
 
+var CONVERSION_FACTOR = 1;
 var timeToPos = function(t) {
-	return t*1;
+	return t*CONVERSION_FACTOR;
+};
+
+var posToTime = function(p) {
+	return p*(1/CONVERSION_FACTOR);
 };
 
 var dist_2d = function (pos1, pos2) {
