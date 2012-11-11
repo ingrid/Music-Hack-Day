@@ -77,7 +77,7 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
             avatar = createAvatar();
             App.avatar_layer.add(avatar.obj);
 
-            for (note_idx = 0; note_idx < 100; note_idx++) {
+            for (note_idx = 0; note_idx < 357; note_idx++) {
                 var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
 
                 //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
