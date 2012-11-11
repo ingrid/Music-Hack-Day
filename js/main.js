@@ -94,8 +94,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             //console.log(note_data);
 
             //var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            //avatar.move(note_data.Num);
-            avatar.move(11);
+            avatar.move(note_data.Num);
         });
     };
     
@@ -115,7 +114,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             // Moves notes from future note array to scoring array when they come in range
             for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
                 var note = App.all_notes[note_idx];
-                var time_window = Math.abs(time_elapsed - note.time);
+                var time_window = Math.abs((time_elapsed + App.time_offset) - note.time);
                 if (time_window < App.game_difficulty_prefs.scoring_range) {
                     App.future_note_idx = note_idx + 1;
                     App.notes_to_score.push(note);
@@ -131,7 +130,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             var amount_to_remove = 0;
             for (note_idx = 0; note_idx < App.notes_to_score.length; note_idx ++) {
                 var note = App.notes_to_score[note_idx];
-                var time_window = Math.abs(time_elapsed - note.time);
+                var time_window = Math.abs((time_elapsed + App.time_offset) - note.time);
                 var pitch = avatar.getPitch();
     
                 note.update_score(pitch, time_elapsed);

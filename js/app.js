@@ -1,10 +1,10 @@
-define([], function () {
+define(["helpers"], function (helpers) {
 	var App = {
 		time_offset : null,
 		tuner : null,
 		current_score : 0,
 		game_difficulty_prefs : {
-			scoring_range : 400,
+			scoring_range : 200,
 			note_is_good : 140
 		},
 		start_time : null,
@@ -22,7 +22,7 @@ define([], function () {
 		effects_layer : new Kinetic.Layer()
 	};
 
-	App.time_offset = App.stage.getWidth()/3;
+	App.time_offset = posToTime(App.stage.getWidth()/3);
 
 	var bg = new Kinetic.Rect({
 		x : 0,
@@ -35,7 +35,7 @@ define([], function () {
 	var fade_effect = new Kinetic.Rect({
 		x : 0,
 		y : 0,
-		width : App.time_offset,
+		width : timeToPos(App.time_offset),
 		height : App.stage.getHeight(),
 		fill : "rgba(0,0,0,0.5)"
 	});
@@ -46,7 +46,7 @@ define([], function () {
 	  y: 0
 	},
 	end: {
-	  x: App.time_offset,
+	  x: timeToPos(App.time_offset),
 	  y: 0
 	},
 	colorStops: [0, 'rgba(0,0,0,0.9)', 1, 'rgba(0,0,0,0.05)']

@@ -19,7 +19,7 @@ define(["app", "helpers"], function(App, helpers) {
                 y : this.pitch
             };
             var p2 = {
-                x : time_elapsed,
+                x : time_elapsed+App.time_offset,
                 y : pitch
             };
             if (this.scoring_dist === null) {
