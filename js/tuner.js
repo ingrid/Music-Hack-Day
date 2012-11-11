@@ -109,12 +109,13 @@
     'G#': 11
   };
 
-  Tuner = function(onUpdate, noiseThresholdMultiplier) {
-    var audioContext, buffer, bufferFillSize, bufferFiller, currentDiff, currentFrequency, currentLogFrequency, currentLoopedNote, currentNum, error, fft, fftSize, gauss, hp, i, lp, sampleRate, success;
+  Tuner = function(onFirstSuccess, onUpdate, noiseThresholdMultiplier) {
+    var audioContext, buffer, bufferFillSize, bufferFiller, currentDiff, currentFrequency, currentLogFrequency, currentLoopedNote, currentNote, currentNum, error, fft, fftSize, gauss, hp, i, isFirstSuccess, lp, sampleRate, success;
     if (noiseThresholdMultiplier == null) {
       noiseThresholdMultiplier = .3;
     }
-    window.currentNote = null;
+    isFirstSuccess = false;
+    currentNote = null;
     currentDiff = null;
     currentLoopedNote = null;
     currentNum = null;
@@ -181,7 +182,7 @@
         hp.connect(bufferFiller);
         bufferFiller.connect(audioContext.destination);
         process = function() {
-          var b, bufferCopy, currentNote, downsampled, firstFreq, freq, interp, left, noiseThrehold, p, peak, peaks, q, right, s, secondFreq, spectrumPoints, thirdFreq, upsampled, x, _i, _j, _k, _l, _len, _m, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
+          var b, bufferCopy, downsampled, firstFreq, freq, interp, left, noiseThrehold, p, peak, peaks, q, right, s, secondFreq, spectrumPoints, thirdFreq, upsampled, x, _i, _j, _k, _l, _len, _m, _ref, _ref1, _ref2, _ref3, _ref4, _ref5;
           bufferCopy = (function() {
             var _i, _len, _results;
             _results = [];
@@ -310,6 +311,10 @@
               display.clear();
             }
           }
+          if (!isFirstSuccess) {
+            isFirstSuccess = true;
+            onFirstSuccess();
+          }
           return onUpdate({
             currentDiff: currentDiff,
             loopednote: currentLoopedNote,
@@ -375,7 +380,7 @@
               context.fillRect freqWidth * f, canvas.height / 2, freqWidth, -Math.pow(1e4 * fft.spectrum[f], 2)
       */
 
-      return setInterval(process, 100);
+      return setInterval(process, 5);
     };
     error = function(e) {
       console.log(e);

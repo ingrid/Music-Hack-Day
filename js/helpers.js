@@ -6,7 +6,7 @@ var sign = function(n) {
 };
 
 var timeToPos = function(t) {
-	return t/5;
+	return t*1;
 };
 
 var dist_2d = function (pos1, pos2) {

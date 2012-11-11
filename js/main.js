@@ -54,34 +54,38 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
             goal_height : App.stage.getHeight()
         }
         
-        var main_circle = new Kinetic.Circle({
+        var main_rect = new Kinetic.Rect({
             x : 0,
-            y : 0,
-            radius : size,
-            fill: 'red'
+            y : -25,
+            width: 20,
+            height: 50,
+            fill: 'rgb(146, 255, 217)'
         });
         
-        a.obj.add(main_circle);
+        a.obj.add(main_rect);
         
         return a;
     };
     
     
     var setup = function () {
-        var note_idx;
-        
-        App.start_time = new Date();
-        avatar = createAvatar();
-        App.avatar_layer.add(avatar.obj);
+        App.tuner = Tuner(function () {
+            // First success.
+            var note_idx;
+            var initial_offset = 3000;
+            
+            avatar = createAvatar();
+            App.avatar_layer.add(avatar.obj);
 
-        for (note_idx = 0; note_idx < 300; note_idx++) {
-            var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
+            for (note_idx = 0; note_idx < 200; note_idx++) {
+                var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
 
-            //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            notes.addNote(r, (note_idx + 1) * 1000);
-        }
+                //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
+                notes.addNote(r, (note_idx + 1) * 300 + initial_offset);
+            }
 
-        App.tuner = Tuner(function (note_data) {
+            beginMainLoop();
+        },function (note_data) {
             //console.log(note_data);
 
             var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
@@ -91,50 +95,54 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     
     setup();
     
-    loop = setInterval(function(){
-        //var nte = App.tuner.note_data;
-        //console.log(nte);
-        //avatar.move(r);
-
-        var note_idx;
-        var time_elapsed = new Date() - App.start_time;
-        notes.move(time_elapsed);
-        
-        // Moves notes from future note array to scoring array when they come in range
-        for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
-            var note = App.all_notes[note_idx];
-            var time_window = Math.abs(time_elapsed - note.time);
-            if (time_window < App.game_difficulty_prefs.scoring_range) {
-                App.future_note_idx = note_idx + 1;
-                App.notes_to_score.push(note);
-            } else {
-                note_idx = App.all_notes.length; // Break out of the loop
-            }
-        }
-
-        // Score notes in the scoring array. Move them out when they leave the array
-        var amount_to_remove = 0;
-        for (note_idx = 0; note_idx < App.notes_to_score.length; note_idx ++) {
-            var note = App.notes_to_score[note_idx];
-            var time_window = Math.abs(time_elapsed - note.time);
-            var pitch = avatar.getPitch();
-
-            note.update_score(pitch, time_elapsed);
-            if (time_window > App.game_difficulty_prefs.scoring_range) {
-                // Actually score!
-                note.score();
-                amount_to_remove ++;
-            } else {
-                note_idx = App.notes_to_score.length; // Break out of the loop
-            }
-        }
-        for (note_idx = 0; note_idx < amount_to_remove; note_idx ++) {
-            App.notes_to_score.shift();
-        }
-
-        avatar.update();
-        App.avatar_layer.draw();
-        App.notes_layer.draw();
-    }, 20);
+    var beginMainLoop = function() {
+        App.start_time = new Date();
+        loop = setInterval(function(){
+            //var nte = App.tuner.note_data;
+            //console.log(nte);
+            //avatar.move(r);
     
+            var note_idx;
+            var time_elapsed = new Date() - App.start_time;
+            notes.move(time_elapsed);
+            
+            // Moves notes from future note array to scoring array when they come in range
+            for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
+                var note = App.all_notes[note_idx];
+                var time_window = Math.abs(time_elapsed - note.time);
+                if (time_window < App.game_difficulty_prefs.scoring_range) {
+                    App.future_note_idx = note_idx + 1;
+                    App.notes_to_score.push(note);
+                } else {
+                    note_idx = App.all_notes.length; // Break out of the loop
+                }
+            }
+    
+            // Score notes in the scoring array. Move them out when they leave the array
+            var amount_to_remove = 0;
+            for (note_idx = 0; note_idx < App.notes_to_score.length; note_idx ++) {
+                var note = App.notes_to_score[note_idx];
+                var time_window = Math.abs(time_elapsed - note.time);
+                var pitch = avatar.getPitch();
+    
+                note.update_score(pitch, time_elapsed);
+                if (time_window > App.game_difficulty_prefs.scoring_range) {
+                    // Actually score!
+                    note.score();
+                    amount_to_remove ++;
+                } else {
+                    note_idx = App.notes_to_score.length; // Break out of the loop
+                }
+            }
+            for (note_idx = 0; note_idx < amount_to_remove; note_idx ++) {
+                App.notes_to_score.shift();
+            }
+    
+            avatar.update();
+            notes.updateBackground(time_elapsed);
+            App.background_layer.draw();
+            App.avatar_layer.draw();
+            App.notes_layer.draw();
+        }, 20);
+    };    
 });

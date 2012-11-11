@@ -14,8 +14,9 @@ frequencies =
 
 looped_frequencies = {'A':0, 'A#':1, 'B':2, 'C':3, 'C#':4, 'D':5, 'D#':6, 'E':7, 'F':8, 'F#':9, 'G':10, 'G#':11}
 
-Tuner = (onUpdate, noiseThresholdMultiplier = .3) ->
-  window.currentNote = null
+Tuner = (onFirstSuccess, onUpdate, noiseThresholdMultiplier = .3) ->
+  isFirstSuccess = false
+  currentNote = null
   currentDiff = null
   currentLoopedNote = null
   currentNum = null
@@ -170,6 +171,9 @@ Tuner = (onUpdate, noiseThresholdMultiplier = .3) ->
             display.clear()
         
         #render()
+        if not isFirstSuccess
+          isFirstSuccess = true
+          onFirstSuccess()
         onUpdate
           currentDiff : currentDiff
           loopednote : currentLoopedNote
@@ -224,7 +228,7 @@ Tuner = (onUpdate, noiseThresholdMultiplier = .3) ->
       for f in [10...(fft.spectrum.length / 4) - 10]
         context.fillRect freqWidth * f, canvas.height / 2, freqWidth, -Math.pow(1e4 * fft.spectrum[f], 2)
     ###
-    setInterval process, 100
+    setInterval process, 5
 
   error = (e) ->
     console.log e
