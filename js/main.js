@@ -42,6 +42,9 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
                 
                 this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
             },
+            getPitch : function () {
+                return this.obj.getPosition().y;
+            },
             velocity : 0,
             acceleration : 0,
             max_velocity : 10,
@@ -79,7 +82,7 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     loop = setInterval(function(){
         var note_idx;
         var time_elapsed = new Date() - App.start_time;
-        notes.group.setAbsolutePosition({x: -timeToPos(time_elapsed), y: 0});
+        notes.move(time_elapsed);
         
         // Moves notes from future note array to scoring array when they come in range
         for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
@@ -98,7 +101,8 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
         for (note_idx = 0; note_idx < App.notes_to_score.length; note_idx ++) {
             var note = App.notes_to_score[note_idx];
             var time_window = Math.abs(time_elapsed - note.time);
-            var pitch = avatar.obj.getPosition().y;
+            var pitch = avatar.getPitch();
+
             note.update_score(pitch, time_elapsed);
             if (time_window > App.game_difficulty_prefs.scoring_range) {
                 // Actually score!

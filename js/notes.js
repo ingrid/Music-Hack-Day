@@ -47,7 +47,8 @@ define(["app", "helpers"], function(App, helpers) {
             this.group.add(note);
             App.all_notes.push(note);
         },
-        addNotes : function() {
+        move : function (t_since_start) {
+            this.group.setAbsolutePosition({x: -timeToPos(t_since_start), y: 0});
         }
     };
     
