@@ -1,5 +1,6 @@
 define([], function () {
 	var App = {
+		tuner : null,
 		current_score : 0,
 		game_difficulty_prefs : {
 			scoring_range : 400,

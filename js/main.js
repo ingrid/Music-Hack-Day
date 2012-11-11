@@ -40,7 +40,9 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
                     delta_height = Math.abs(Math.abs(delta_height)-Math.abs(delta_height)) * dir_sign;
                 }
                 
-                this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
+                //this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
+
+                this.obj.setAbsolutePosition({x: curr_pos.x, y: this.goal_height});
             },
             getPitch : function () {
                 return this.obj.getPosition().y;
@@ -67,19 +69,33 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     
     var setup = function () {
         var note_idx;
+        
         App.start_time = new Date();
         avatar = createAvatar();
         App.avatar_layer.add(avatar.obj);
 
         for (note_idx = 0; note_idx < 300; note_idx++) {
-            var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
+            var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
+
+            //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
             notes.addNote(r, (note_idx + 1) * 1000);
         }
+
+        App.tuner = Tuner(function (note_data) {
+            //console.log(note_data);
+
+            var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
+            avatar.move(r);
+        });
     };
     
     setup();
     
     loop = setInterval(function(){
+        //var nte = App.tuner.note_data;
+        //console.log(nte);
+        //avatar.move(r);
+
         var note_idx;
         var time_elapsed = new Date() - App.start_time;
         notes.move(time_elapsed);
@@ -120,11 +136,5 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
         App.avatar_layer.draw();
         App.notes_layer.draw();
     }, 20);
-    
-    // Randomly generate pitches for data
-    setInterval(function(){
-        var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-        avatar.move(r);
-    }, 500);
     
 });
