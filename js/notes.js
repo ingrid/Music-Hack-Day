@@ -39,7 +39,18 @@ define(["app", "helpers"], function(App, helpers) {
                 console.log(App.current_score);
             }
         };
-        note.add(new Kinetic.Circle(note_template));
+        note.flash = function () {
+            if (this.obj !== null) {
+                console.log("Flash!");
+                this.obj.setFill("white");
+            }
+            var the_obj = this.obj;
+            setTimeout( function () {
+                the_obj.setFill(note_template.fill);
+            }, 500);
+        };
+        note.obj = new Kinetic.Circle(note_template);
+        note.add(note.obj);
         note.setAbsolutePosition(timeToPos(time), height_from_pitch(pitch, App.stage.getHeight()));
         return note;
     };
