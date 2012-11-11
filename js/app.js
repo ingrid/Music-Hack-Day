@@ -1,7 +1,9 @@
 define([], function () {
 	var App = {
+		current_score : 0,
 		game_difficulty_prefs : {
-			scoring_range : 40
+			scoring_range : 400,
+			note_is_good : 40
 		},
 		start_time : null,
 		all_notes : [],
