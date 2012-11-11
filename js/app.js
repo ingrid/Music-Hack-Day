@@ -1,5 +1,6 @@
 define([], function () {
 	var App = {
+		time_offset : null,
 		tuner : null,
 		current_score : 0,
 		game_difficulty_prefs : {
@@ -21,6 +22,8 @@ define([], function () {
 		effects_layer : new Kinetic.Layer()
 	};
 
+	App.time_offset = App.stage.getWidth()/3;
+
 	var bg = new Kinetic.Rect({
 		x : 0,
 		y : 0,
@@ -32,7 +35,7 @@ define([], function () {
 	var fade_effect = new Kinetic.Rect({
 		x : 0,
 		y : 0,
-		width : App.stage.getWidth()/3,
+		width : App.time_offset,
 		height : App.stage.getHeight(),
 		fill : "rgba(0,0,0,0.5)"
 	});
@@ -43,7 +46,7 @@ define([], function () {
 	  y: 0
 	},
 	end: {
-	  x: App.stage.getWidth()/3,
+	  x: App.time_offset,
 	  y: 0
 	},
 	colorStops: [0, 'rgba(0,0,0,0.9)', 1, 'rgba(0,0,0,0.1)']

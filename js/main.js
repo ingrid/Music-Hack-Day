@@ -4,7 +4,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
     var createAvatar = function () {
         var size = 50;
         var a_grp = new Kinetic.Group();
-        a_grp.setPosition(20, App.stage.getHeight()/2);
+        a_grp.setPosition(App.time_offset, App.stage.getHeight()/2);
         
         var a = {
             obj: a_grp,
@@ -18,7 +18,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             update : function () {
                 // Smoothly moves the avatar to the goal position
                 
-                var curr_pos = this.obj.getAbsolutePosition();
+                var curr_pos = this.obj.getPosition();
                 
                 var offset = this.goal_height - curr_pos.y;
                 
@@ -42,8 +42,8 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                     delta_height = Math.abs(Math.abs(delta_height)-Math.abs(delta_height)) * dir_sign;
                 }
                 
-                //this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
-                this.obj.setAbsolutePosition({x: curr_pos.x, y: this.goal_height-this.size/2});
+                //this.obj.setPosition({x: curr_pos.x, y: curr_pos.y + delta_height});
+                this.obj.setPosition({x: curr_pos.x, y: this.goal_height});
             },
             getPitch : function () {
                 return this.obj.getPosition().y;
@@ -56,8 +56,8 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
         }
         
         var main_rect = new Kinetic.Rect({
-            x : 0,
-            y : -25,
+            x : -10,
+            y : -a.size/2,
             width: 20,
             height: a.size,
             fill: 'rgb(146, 255, 217)'
@@ -94,7 +94,8 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             //console.log(note_data);
 
             //var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            avatar.move(note_data.Num);
+            //avatar.move(note_data.Num);
+            avatar.move(11);
         });
     };
     

@@ -24,7 +24,7 @@ var linear_interp_y = function (p1, p2, x) {
 }
 
 var height_from_pitch = function (pitch, stage_height) {
-	return linear_interp_y({x: 0, y:stage_height/16},{x: 11, y:stage_height/16*14},(12-pitch));
+	return linear_interp_y({x: 0, y:stage_height*2/16},{x: 11, y:stage_height*14/16},(11-pitch));
 }
 
 var dist_2d = function (pos1, pos2) {
