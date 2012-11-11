@@ -49,7 +49,7 @@ define([], function () {
 	  x: App.time_offset,
 	  y: 0
 	},
-	colorStops: [0, 'rgba(0,0,0,0.9)', 1, 'rgba(0,0,0,0.1)']
+	colorStops: [0, 'rgba(0,0,0,0.9)', 1, 'rgba(0,0,0,0.05)']
 	});
 
 	App.background_layer.add(bg);
