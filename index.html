@@ -12,7 +12,7 @@
     <script type="text/javascript" src="js/tuner.js"></script>
     <script data-main="js/main" src="js/require.js"></script>
     <script src="js/kinetic-v4.0.3.js"></script>
-    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans:400,700' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id='screen-wrapper'>
@@ -21,6 +21,9 @@
         <span id='current-note'>A#<span>
       </div>
       <div id='screenContainer'></div>
+      <div id='footer'>
+        <span id='event'>Music Hack Day 2012</span><span id='authors'>Ingrid | Julian | Merry | Tom</span>
+      </div>
     </div>
   </body>
   <style>
@@ -28,8 +31,31 @@
       padding: 0;
       margin: 0;
     }
+    #screen-wrapper {
+      width: 1024;
+    }
     #header {
       height: 50px;
+    }
+    #footer {
+      height: 25px; 
+    }
+    #event {
+      font-weight: 700;
+    }
+    small {
+      font-weight: 400;
+    }
+    #authors, #event {
+      margin-top: 0px;
+      //font-size: 30px;
+      font-family: 'Josefin Sans', sans-serif;
+      text-shadow: 1px 1px 1px #fff;
+      margin-left: 1em;
+      line-height: 25px;
+      display: inline-block;
+    }
+    #header, #footer {
       background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dadada));
       margin-top: 0px;
       border-bottom: solid;

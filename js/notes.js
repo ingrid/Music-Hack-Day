@@ -34,7 +34,6 @@ define(["app", "helpers"], function(App, helpers) {
             }
         }
         note.score = function () {
-            console.log(this.scoring_dist);
             if (App.game_difficulty_prefs.note_is_good >= this.scoring_dist) {
                 App.current_score += 10;
                 console.log(App.current_score);

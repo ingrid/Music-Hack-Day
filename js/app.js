@@ -14,7 +14,7 @@ define(["helpers"], function (helpers) {
 		stage : new Kinetic.Stage({
 		    container : 'screenContainer',
 		    width : 1024,
-		    height : 768-50
+		    height : 768-50-25
 		}),
 		notes_layer : new Kinetic.Layer(),
 		background_layer : new Kinetic.Layer(),
