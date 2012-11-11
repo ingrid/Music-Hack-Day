@@ -63,22 +63,47 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
     
     
     var setup = function () {
+        var note_idx;
         App.start_time = new Date();
         avatar = createAvatar();
         App.avatar_layer.add(avatar.obj);
 
-        for (var i = 0; i < 300; i++) {
+        for (note_idx = 0; note_idx < 300; note_idx++) {
             var r = Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            notes.addNote(timeToPos((i+1)*1000), r);
+            notes.addNote(timeToPos((note_idx+1)*1000), r);
         }
     };
     
     setup();
     
     loop = setInterval(function(){
+        var note_idx;
         var time_elapsed = new Date() - App.start_time;
-        console.log(timeToPos(time_elapsed));
         notes.group.setAbsolutePosition({x: -timeToPos(time_elapsed), y: 0});
+        
+        // Moves notes from future note array to scoring array when they come in range
+        for (note_idx = App.future_note_idx; note_idx < App.future_notes.length; note_idx ++) {
+            var note = App.future_notes[note_idx];
+            var x_to_avatar = Math.abs(avatar.obj.getPosition().x - note.getPosition().x);
+            if (x_to_avatar < App.game_difficulty_prefs.scoring_range) {
+                App.future_note_idx = note_idx;
+                App.notes_to_score.push(note);
+            } else {
+                note_idx = App.future_notes.length; // Break out of the loop
+            }
+        }
+
+        // Score notes in the scoring array. Move them out when they leave the array
+        for (note_idx = 0; note_idx < App.notes_to_score.length; note_idx ++) {
+            var note = App.notes_to_score[note_idx];
+            var x_to_avatar = Math.abs(avatar.obj.getPosition().x - note.getPosition().x);
+            note.score(avatar.obj.getPosition());
+            if (x_to_avatar > App.game_difficulty_prefs.scoring_range) {
+
+            } else {
+                note_idx = App.future_notes.length; // Break out of the loop
+            }
+        }
         avatar.update();
         App.avatar_layer.draw();
         App.notes_layer.draw();

@@ -1,6 +1,12 @@
 define([], function () {
 	var App = {
+		game_difficulty_prefs : {
+			scoring_range : 40
+		},
 		start_time : null,
+		all_notes : [],
+		future_note_idx : 0,
+		notes_to_score : [],
 		stage : new Kinetic.Stage({
 		    container : 'screenContainer',
 		    width : 1024,
