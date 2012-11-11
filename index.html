@@ -22,7 +22,7 @@
       </div>
       <div id='screenContainer'></div>
       <div id='footer'>
-        <span id='event'>Music Hack Day 2012</span><span id='authors'>Ingrid | Julian | Merry | Tom</span>
+        <span id='event'>Music Hack Day 2012</span><span id='authors'>Ingrid | Julian | Merry | Tom</span><a id='attribution' href='http://phenomnomnominal.github.com/'>Powered by Craig Spence's Guitar Tuner</a>
       </div>
     </div>
   </body>
@@ -46,7 +46,7 @@
     small {
       font-weight: 400;
     }
-    #authors, #event {
+    #authors, #event, #attribution {
       margin-top: 0px;
       //font-size: 30px;
       font-family: 'Josefin Sans', sans-serif;
@@ -54,6 +54,11 @@
       margin-left: 1em;
       line-height: 25px;
       display: inline-block;
+    }
+    #attribution {
+      color: #777;
+      float: right;
+      margin-right: 1em;
     }
     #header, #footer {
       background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dadada));
