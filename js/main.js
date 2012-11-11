@@ -2,7 +2,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
     var avatar_layer, avatar, background_layer, loop, stage, string;
     
     var createAvatar = function () {
-        var size = 20;
+        var size = 50;
         var a_grp = new Kinetic.Group();
         a_grp.setPosition(20, App.stage.getHeight()/2);
         
@@ -11,7 +11,9 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             size : size,
             move : function (pitch) {
                 // Converts pitch into a y position
-                this.goal_height = pitch;
+                //App.stage.getHeight()/12 * (12-note_data.Num)
+                //this.goal_height = App.stage.getHeight()/12*(12-pitch);
+                this.goal_height = height_from_pitch(pitch, App.stage.getHeight());
             },
             update : function () {
                 // Smoothly moves the avatar to the goal position
@@ -41,8 +43,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 }
                 
                 //this.obj.setAbsolutePosition({x: curr_pos.x, y: curr_pos.y + delta_height});
-
-                this.obj.setAbsolutePosition({x: curr_pos.x, y: this.goal_height});
+                this.obj.setAbsolutePosition({x: curr_pos.x, y: this.goal_height-this.size/2});
             },
             getPitch : function () {
                 return this.obj.getPosition().y;
@@ -58,7 +59,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             x : 0,
             y : -25,
             width: 20,
-            height: 50,
+            height: a.size,
             fill: 'rgb(146, 255, 217)'
         });
         
@@ -78,7 +79,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             App.avatar_layer.add(avatar.obj);
             var total_notes = stillalivenotes.length;
             for (note_idx = 0; note_idx < total_notes; note_idx++) {
-                var p = App.stage.getHeight()/12 * stillalivenotes[note_idx]["pitch"];
+                var p = stillalivenotes[note_idx]["pitch"]; //App.stage.getHeight()/12 * stillalivenotes[note_idx]["pitch"];
                 var t = initial_offset + stillalivenotes[note_idx]["t"];
                 //var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
 
@@ -89,10 +90,11 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
 
             beginMainLoop();
         },function (note_data) {
+            // Whenever the input pitch changes
             //console.log(note_data);
 
-            var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            avatar.move(r);
+            //var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
+            avatar.move(note_data.Num);
         });
     };
     

@@ -2,7 +2,7 @@ define(["app", "helpers"], function(App, helpers) {
     var note_template = {
         x : 0,
         y : 0,
-        radius : 20,
+        radius : App.stage.getHeight()/20,
         fill : 'rgb(0,255,168)',
         stroke : 'rgb(146,255,217)',
         strokeWidth: 3
@@ -36,18 +36,9 @@ define(["app", "helpers"], function(App, helpers) {
             }
         };
         note.add(new Kinetic.Circle(note_template));
-        note.setAbsolutePosition(timeToPos(time), pitch);
+        note.setAbsolutePosition(timeToPos(time), height_from_pitch(pitch, App.stage.getHeight()));
         return note;
     };
-    
-    var linear_interp_y = function (p1, p2, x) {
-        var denom = (p2.x-p1.x);
-        if (denom !== 0) {
-           return p1.y + (x - p1.x)*(p2.y-p1.y)/(p2.x-p1.x);
-        } else {
-            return (p1.y+p2.y)/2;
-        }
-    }
 
     var notes = {
         layer : new Kinetic.Layer(),
