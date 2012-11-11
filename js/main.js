@@ -9,7 +9,9 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
         var a = {
             obj: a_grp,
             size : size,
+            actual_pitch : 0,
             move : function (pitch) {
+                this.actual_pitch = pitch;
                 // Converts pitch into a y position
                 //App.stage.getHeight()/12 * (12-note_data.Num)
                 //this.goal_height = App.stage.getHeight()/12*(12-pitch);
@@ -46,7 +48,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 this.obj.setPosition({x: curr_pos.x, y: this.goal_height});
             },
             getPitch : function () {
-                return this.goal_height;
+                return this.actual_pitch;
             },
             velocity : 0,
             acceleration : 0,
@@ -113,6 +115,11 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
             for (note_idx = App.future_note_idx; note_idx < App.all_notes.length; note_idx ++) {
                 var note = App.all_notes[note_idx];
                 var time_window = Math.abs((time_elapsed + App.time_offset) - note.time);
+
+                if (note_idx === App.future_note_idx && note.pitch === avatar.getPitch()) {
+                    note.flash();
+                }
+
                 if (time_window < App.game_difficulty_prefs.scoring_range) {
                     App.future_note_idx = note_idx + 1;
                     App.notes_to_score.push(note);
@@ -144,6 +151,8 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 App.notes_to_score.shift();
             }
     
+            App.scoring_rect.setFill("green");
+
             avatar.update();
             notes.updateBackground(time_elapsed);
             App.background_layer.draw();
