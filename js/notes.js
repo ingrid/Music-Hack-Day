@@ -34,14 +34,17 @@ define(["app", "helpers"], function(App, helpers) {
             }
         }
         note.score = function () {
+            console.log(this.scoring_dist);
             if (App.game_difficulty_prefs.note_is_good >= this.scoring_dist) {
                 App.current_score += 10;
                 console.log(App.current_score);
+                App.scoring_rect.setFill(getTintedColor(App.scoring_rect.getFill(),5));
+            } else {
+                App.scoring_rect.setFill(getTintedColor(App.scoring_rect.getFill(),-5));
             }
         };
         note.flash = function () {
             if (this.obj !== null) {
-                console.log("Flash!");
                 this.obj.setFill("white");
             }
             var the_obj = this.obj;

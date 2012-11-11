@@ -5,7 +5,7 @@ define(["helpers"], function (helpers) {
 		current_score : 0,
 		game_difficulty_prefs : {
 			scoring_range : 200,
-			note_is_good : 140
+			note_is_good : 10
 		},
 		start_time : null,
 		all_notes : [],
@@ -28,7 +28,7 @@ define(["helpers"], function (helpers) {
 		y : 0,
 		width : App.stage.getWidth(),
 		height : App.stage.getHeight(),
-		fill : "rgb(255,92,92)"
+		fill : "#ff5c5c"
 	});
 
 	App.time_offset = posToTime(App.stage.getWidth()/3);

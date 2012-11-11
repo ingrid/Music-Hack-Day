@@ -151,7 +151,8 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 App.notes_to_score.shift();
             }
     
-            App.scoring_rect.setFill("green");
+            //console.log(App.scoring_rect.getFill());
+            //console.log(getTintedColor(App.scoring_rect.getFill(),10));
 
             avatar.update();
             notes.updateBackground(time_elapsed);
