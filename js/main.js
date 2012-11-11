@@ -1,4 +1,4 @@
-require(["notes", "helpers", "app"], function(notes, helpers, App){
+require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers, App){
     var avatar_layer, avatar, background_layer, loop, stage, string;
     
     var createAvatar = function () {
@@ -76,12 +76,15 @@ require(["notes", "helpers", "app"], function(notes, helpers, App){
             
             avatar = createAvatar();
             App.avatar_layer.add(avatar.obj);
-
-            for (note_idx = 0; note_idx < 357; note_idx++) {
-                var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
+            var total_notes = stillalivenotes.length;
+            for (note_idx = 0; note_idx < total_notes; note_idx++) {
+                var p = App.stage.getHeight()/12 * stillalivenotes[note_idx]["pitch"];
+                var t = initial_offset + stillalivenotes[note_idx]["t"];
+                //var r = App.stage.getHeight()/12 * Math.round(Math.random()*12);
 
                 //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-                notes.addNote(r, (note_idx + 1) * 300 + initial_offset);
+                //notes.addNote(r, (note_idx + 1) * 300 + initial_offset);
+                notes.addNote(p, t);
             }
 
             beginMainLoop();
