@@ -46,7 +46,7 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
                 this.obj.setPosition({x: curr_pos.x, y: this.goal_height});
             },
             getPitch : function () {
-                return this.obj.getPosition().y;
+                return this.goal_height;
             },
             velocity : 0,
             acceleration : 0,
@@ -85,16 +85,14 @@ require(["notes", "helpers", "app", "stillalivenotes"], function(notes, helpers,
 
                 //App.stage.getHeight()/2+App.stage.getHeight()*0.4;
                 //notes.addNote(r, (note_idx + 1) * 300 + initial_offset);
-                notes.addNote(p, t);
+                notes.addNote(p, t*0.5);
             }
 
             beginMainLoop();
         },function (note_data) {
             // Whenever the input pitch changes
-            //console.log(note_data);
-
-            //var r = App.stage.getHeight()/12 * (12-note_data.Num); //Math.random()*App.stage.getHeight()/2+App.stage.getHeight()*0.4;
-            avatar.move(note_data.Num);
+            $('#current-note').text(note_data.loopednote); // Make the note indicator update
+            avatar.move(note_data.Num); // Move the avatar appropriately
         });
     };
     

@@ -14,6 +14,10 @@ define(["app", "helpers"], function(App, helpers) {
         note.time = time;
         note.pitch = pitch;
         note.update_score = function (pitch, time_elapsed) {
+            /*console.log("Note Pitch");
+            console.log(this.pitch);
+            console.log("My Pitch");
+            console.log(pitch);*/
             var p1 = {
                 x : this.time,
                 y : this.pitch

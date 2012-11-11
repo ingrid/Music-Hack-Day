@@ -12,9 +12,14 @@
     <script type="text/javascript" src="js/tuner.js"></script>
     <script data-main="js/main" src="js/require.js"></script>
     <script src="js/kinetic-v4.0.3.js"></script>
+    <link href='http://fonts.googleapis.com/css?family=Josefin+Sans' rel='stylesheet' type='text/css'>
   </head>
   <body>
     <div id='screen-wrapper'>
+      <div id='header'>
+        <h1>Whist <small>- the singing game</small></h1>
+        <span id='current-note'>A#<span>
+      </div>
       <div id='screenContainer'></div>
     </div>
   </body>
@@ -22,6 +27,33 @@
     body {
       padding: 0;
       margin: 0;
+    }
+    #header {
+      height: 50px;
+      background: -webkit-gradient(linear, left top, left bottom, from(#f8f8f8), to(#dadada));
+      margin-top: 0px;
+      border-bottom: solid;
+      border-width: 2px;
+      border-color: #ccc;
+      box-shadow: 3px 3px 5px 6px #333;
+      z-index: 0;
+      margin-bottom: 1px;
+    }
+    h1 {
+      margin-top: 0px;
+      font-size: 30px;
+      font-family: 'Josefin Sans', sans-serif;
+      text-shadow: 1px 1px 1px #fff;
+      margin-left: 1em;
+      line-height: 50px;
+      display: inline-block;
+    }
+    #current-note {
+      text-shadow: 1px 1px 1px #fff;
+      font-size: 30px;
+      margin-right: 1em;
+      float: right;
+      line-height: 50px;
     }
   </style>
 </html>

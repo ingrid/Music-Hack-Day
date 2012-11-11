@@ -14,23 +14,24 @@ define(["helpers"], function (helpers) {
 		stage : new Kinetic.Stage({
 		    container : 'screenContainer',
 		    width : 1024,
-		    height : 768
+		    height : 768-50
 		}),
 		notes_layer : new Kinetic.Layer(),
 		background_layer : new Kinetic.Layer(),
 		avatar_layer : new Kinetic.Layer(),
-		effects_layer : new Kinetic.Layer()
+		effects_layer : new Kinetic.Layer(),
+		scoring_rect : null
 	};
 
-	App.time_offset = posToTime(App.stage.getWidth()/3);
-
-	var bg = new Kinetic.Rect({
+	App.scoring_rect = new Kinetic.Rect({
 		x : 0,
 		y : 0,
 		width : App.stage.getWidth(),
 		height : App.stage.getHeight(),
 		fill : "rgb(255,92,92)"
 	});
+
+	App.time_offset = posToTime(App.stage.getWidth()/3);
 
 	var fade_effect = new Kinetic.Rect({
 		x : 0,
@@ -52,7 +53,7 @@ define(["helpers"], function (helpers) {
 	colorStops: [0, 'rgba(0,0,0,0.9)', 1, 'rgba(0,0,0,0.05)']
 	});
 
-	App.background_layer.add(bg);
+	App.background_layer.add(App.scoring_rect);
 	App.effects_layer.add(fade_effect);
 
 	App.stage.add(App.background_layer);
